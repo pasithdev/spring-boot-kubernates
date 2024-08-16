@@ -37,6 +37,7 @@ pipeline{
                     withCredentials([string(credentialsId: 'dockerhub-credentials', variable: 'DOCKERHUB_PASSWORD')]){
                         sh "echo ${DOCKERHUB_PASSWORD} | docker login -u pasith --password-stdin"
                         sh "docker push ${DOCKER_IMAGE}"
+                    }
                 }
             }
         }
