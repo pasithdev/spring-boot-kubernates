@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboot-app
+  labels:
+    app: springboot-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: springboot-app
+  template:
+    metadata:
+      labels:
+        app: springboot-app
+    spec:
+      containers:
+      - name: springboot-app
+        image: pasith/springboot-app-jenkins:latest
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "156Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-service
+  namespace: default
+spec:
+  selector:
+    app: springboot-app
+  ports:
+    - protocol: TCP
+      port: 9091 # Port to expose on the service (ClusterIP) 
+      targetPort: 9091 # Port on the pod to forward to # Springboot app port 
+  type: LoadBalancer

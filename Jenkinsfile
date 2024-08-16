@@ -2,6 +2,7 @@ pipeline{
     agent any
     environment {
         MAVEN_ARGS = " -e clean install"
+        DOCKER_IMAGE ="pasith/springboot-app-jenkins:latest"
     }
     stages{
         stage('Build Maven Project'){
@@ -17,6 +18,14 @@ pipeline{
                     sh "nohup java -jar target/demo-0.0.1-SNAPSHOT.jar &"
                 }
             }
+        }
+        stage('Build Docker Image'){
+            //create docker image from Dockerfile
+           sh "docker build -t ${DOCKER_IMAGE} ."
+           //delete image if not used
+           sh "docker image prune -f"
+           //create docker container from image and run it
+           sh "docker images"
         }
     }
     post{
