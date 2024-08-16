@@ -4,6 +4,7 @@ pipeline{
         MAVEN_ARGS = " -e clean install"
         DOCKER_IMAGE ="pasith/springboot-app-jenkins:latest"
         KUBE_CONFIG_PATH = "/Users/pasith/.kube/config"
+        KUBE_NAMESPACE = "default"
     }
     stages{
         stage('Build Maven Project'){
