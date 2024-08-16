@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage('Build Maven Project'){
             steps{
-                withMaven(maven: 'MAVEN_HOME'){
+                withMaven(maven: "MAVEN_HOME"){
                     sh "mvn ${MAVEN_ARGS}"
                 }
             }
