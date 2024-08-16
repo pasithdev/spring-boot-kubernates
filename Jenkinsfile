@@ -20,12 +20,14 @@ pipeline{
         //    }
         //}
         stage('Build Docker Image'){
-            //create docker image from Dockerfile
-           sh "docker build -t ${DOCKER_IMAGE} ."
-           //delete image if not used
-           sh "docker image prune -f"
-           //create docker container from image and run it
-           sh "docker images"
+            stages{
+                //create docker image from Dockerfile
+                sh "docker build -t ${DOCKER_IMAGE} ."
+                //delete image if not used
+                sh "docker image prune -f"
+                //create docker container from image and run it
+                sh "docker images"
+            }
         }
     }
     post{
