@@ -3,6 +3,7 @@ pipeline{
     environment {
         MAVEN_ARGS = " -e clean install"
         DOCKER_IMAGE ="pasith/springboot-app-jenkins:latest"
+        KUBE_CONFIG_PATH = "/Users/pasith/.kube/config"
     }
     stages{
         stage('Build Maven Project'){
@@ -38,6 +39,14 @@ pipeline{
                         sh "echo ${DOCKERHUB_PASSWORD} | docker login -u pasith --password-stdin"
                         sh "docker push ${DOCKER_IMAGE}"
                     }
+                }
+            }
+        }
+        stage('Deploy to Kubernetes'){
+            steps{
+                withEnv(["PATH=/usr/local/bin:$PATH"]){
+                   sh "kubectl --kubeconfig=${KUBE_CONFIG_PATH} apply -f deployment.yaml -n ${KUBE_NAMESPACE}"
+                   sh "kubectl --kubeconfig=${KUBE_CONFIG_PATH} rollout status deployment/springboot-app -n ${KUBE_NAMESPACE}"
                 }
             }
         }
