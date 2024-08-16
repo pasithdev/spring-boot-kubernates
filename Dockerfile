@@ -8,4 +8,4 @@ COPY ${JAR_FILE} demo.jar
 
 CMD ["java", "-jar", "-Xmx1024M", "/app/demo.jar"]
 
-EXPOSE 9090
+EXPOSE 9091
