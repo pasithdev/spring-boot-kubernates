@@ -20,7 +20,7 @@ pipeline{
         //    }
         //}
         stage('Build Docker Image'){
-            stages{
+            steps{
                 withEnv(["PATH=/usr/local/bin:$PATH"]){
                     //create docker image from Dockerfile
                     sh "docker build -t ${DOCKER_IMAGE} ."
