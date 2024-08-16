@@ -24,7 +24,7 @@ pipeline{
             cleanWs()
         }
         success{
-            echo "Build Success"
+            echo "Build Success!"
         }
         failure{
             echo "Build Failure"
